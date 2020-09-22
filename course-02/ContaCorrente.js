@@ -10,6 +10,6 @@ export class ContaCorrente extends Conta {
     }
 
     sacar(valor) {
-        return super.sacar(valor, 0.1);
+        return this._sacar(valor, 0.10);
     }
 }
