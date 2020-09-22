@@ -1,3 +1,5 @@
+import { Cliente } from './Cliente.js'
+
 export class Conta {
     #saldo;
     #cliente;
@@ -5,6 +7,12 @@ export class Conta {
 
     get saldo() {
         return this.#saldo;
+    }
+
+    set cliente(valor) {
+        if (!(valor instanceof Cliente)) return null
+
+        this.#cliente = valor;
     }
 
     get cliente() {
@@ -15,12 +23,13 @@ export class Conta {
         return this.#agencia;
     }
 
-    sacar(valor) {
+    sacar(valor, taxa = 0) {
         if (this.#saldo < valor) return 0;
 
-        taxa = 0.1 * valor;
-        this.#saldo -= valor;
-        return valor;
+        const valorSacado = valor + (taxa * valor);
+
+        this.#saldo -= valorSacado;
+        return valorSacado;
     }
 
     depositar(valor) {
@@ -39,7 +48,7 @@ export class Conta {
 
     constructor(saldoInicial, cliente, agencia) {
         this.#saldo = saldoInicial;
-        this.#cliente = cliente;
         this.#agencia = agencia;
+        this.cliente = cliente;
     }
 }
