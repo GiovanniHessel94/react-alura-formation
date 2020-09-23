@@ -1,4 +1,4 @@
-import { Cliente } from './Cliente.js'
+import { Cliente } from '../Cliente.js';
 
 // Classe Abstrata
 export class Conta {
@@ -11,7 +11,7 @@ export class Conta {
     }
 
     set cliente(valor) {
-        if (!(valor instanceof Cliente)) return null
+        if (!(valor instanceof Cliente)) return null;
 
         this.#cliente = valor;
     }
