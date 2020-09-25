@@ -15,7 +15,7 @@ console.log('Saldo R$ ', contaCorrenteRicardo.saldo);
 console.log(contaCorrenteRicardo.cliente);
 console.log(contaCorrenteRicardo, '\n');
 
-console.log('Cliente: ', contaCorrenteRicardo.cliente.nome);
+console.log('Cliente: ', contaCorrenteAlice.cliente.nome);
 console.log('Saldo R$ ', contaCorrenteAlice.saldo);
 console.log(contaCorrenteAlice.cliente);
 console.log(contaCorrenteAlice, '\n');
