@@ -20,6 +20,16 @@ const cadastrarClientes = (cpf, nome) => {
         },
         body: clienteJson
     }).then(resposta => {
+        console.log(resposta.status);
+        return resposta.json();
+    });
+}
+
+const deletaCliente = (id) => {
+    return fetch(`http://localhost:4000/clientes/cliente/${id}`, {
+        method: 'DELETE',
+    }).then(resposta => {
+        console.log(resposta.status);
         return resposta.json();
     });
 }
