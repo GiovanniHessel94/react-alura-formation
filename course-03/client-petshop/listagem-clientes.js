@@ -2,6 +2,7 @@ const confirmaEDeletaCliente = (id) => {
     if(confirm('Deseja realmente excluir o cliente?')){
         deletaCliente(id).then(value => {
             alert('Cliente excluido com sucesso');
+            document.location.reload();
         });
     }
 }
@@ -13,7 +14,8 @@ const exibeClientes = (id, cpf, nome) => {
     const conteudoLinha = `
     <td>${cpf}</td>
     <td>${nome}</td>
-    <button type="button" class="btn btn-danger" onclick=confirmaEDeletaCliente(${id})>Excluir</button>`;
+    <button type="button" class="btn btn-danger" onclick=confirmaEDeletaCliente(${id})>Excluir</button>
+    <a href="edita-clientes.html?id=${id}"><button type="Button" class="btn btn-info">Editar</button></a>`;
 
     linha.innerHTML = conteudoLinha;
 
