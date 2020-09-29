@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./componentes/lista/listagem-cliente.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = "./main.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -109,15 +109,87 @@ eval("var api = __webpack_require__(/*! ../../node_modules/style-loader/dist/run
 
 /***/ }),
 
+/***/ "./componentes/cadastro/cadastro-clientes.js":
+/*!***************************************************!*\
+  !*** ./componentes/cadastro/cadastro-clientes.js ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _valida_validaCPF_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../valida/validaCPF.js */ \"./componentes/valida/validaCPF.js\");\n/* harmony import */ var _api_cliente_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../api/cliente.js */ \"./api/cliente.js\");\n\n\n\n\nconst eventoEnvia = (form) => {\n    form.addEventListener(\"submit\",\n        event => {\n            event.preventDefault()\n\n            const nome = event.target.querySelector(\"[data-nome]\").value\n            const cpf = event.target.querySelector(\"[data-cpf]\").value\n\n            if (Object(_valida_validaCPF_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(cpf)) {\n                Object(_api_cliente_js__WEBPACK_IMPORTED_MODULE_1__[\"cadastrarClientes\"])(nome, cpf)\n            } else {\n                alert('O CPF não é válido');\n            }\n        }\n    )\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (eventoEnvia);\n\n//# sourceURL=webpack:///./componentes/cadastro/cadastro-clientes.js?");
+
+/***/ }),
+
+/***/ "./componentes/cadastro/componente-cadastro.js":
+/*!*****************************************************!*\
+  !*** ./componentes/cadastro/componente-cadastro.js ***!
+  \*****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _cadastro_cadastro_clientes_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../cadastro/cadastro-clientes.js */ \"./componentes/cadastro/cadastro-clientes.js\");\n\n\nconst inicializaCadastro = () => {\n  const form = document.createElement('form');\n  const cadastro = `<div class=\"container\">\n    <div class=\"form-group\">\n      <label>CPF</label>\n      <input type=\"number\" class=\"form-control\" data-cpf placeholder=\"Digite seu CPF aqui\" />\n    </div>\n    <div class=\"form-group\">\n      <label>Nome</label>\n      <input type=\"text\" class=\"form-control\" data-nome placeholder=\"Digite seu nome aqui\" />\n    </div>\n    <button type=\"submit\" class=\"btn btn-primary\">Enviar</button>\n    </div> `\n\n  form.innerHTML = cadastro;\n\n  Object(_cadastro_cadastro_clientes_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(form);\n  return form;\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (inicializaCadastro);\n\n//# sourceURL=webpack:///./componentes/cadastro/componente-cadastro.js?");
+
+/***/ }),
+
+/***/ "./componentes/edita/edita-cliente.js":
+/*!********************************************!*\
+  !*** ./componentes/edita/edita-cliente.js ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _api_cliente_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../api/cliente.js */ \"./api/cliente.js\");\n/* harmony import */ var _valida_validaCPF_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../valida/validaCPF.js */ \"./componentes/valida/validaCPF.js\");\n\n\n\nconst eventoForm = form => {\n    const pegaURL = new URL(window.location)\n\n    const id = pegaURL.searchParams.get('id')\n\n    const inputCPF = form.querySelector('[data-cpf]')\n    const inputNome = form.querySelector('[data-nome]')\n\n    Object(_api_cliente_js__WEBPACK_IMPORTED_MODULE_0__[\"detalhaCliente\"])(id).then(dados => {\n        inputCPF.value = dados[0].cpf\n        inputNome.value = dados[0].nome\n    })\n\n    const alerta = (classe, mensagem) => {\n        const linha = document.createElement('section');\n\n        const conteudoLinha = `\n    <div class=\"${classe}\">${mensagem}</div>\n    \n`\n\n        linha.innerHTML = conteudoLinha;\n        return linha;\n    }\n    form.addEventListener('submit', event => {\n        event.preventDefault()\n\n        if (!Object(_valida_validaCPF_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"])(inputCPF.value)) {\n            alert(\"ESSE CPF NÃO EXISTE\")\n            return\n        }\n\n        Object(_api_cliente_js__WEBPACK_IMPORTED_MODULE_0__[\"editaCliente\"])(id, inputCPF.value, inputNome.value)\n            .then(() => {\n\n                form.appendChild(alerta(\n                    \"alert alert-success\",\n                    \"CLIENTE EDITADO COM SUCESSO !\"\n                ))\n            })\n            .catch(() => {\n                form.appendChild(alerta(\n                    \"alert alert-warning\",\n                    \"O CLIENTE NÃO PODE SER EDITADO !\"\n                ))\n            })\n    })\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (eventoForm);\n\n//# sourceURL=webpack:///./componentes/edita/edita-cliente.js?");
+
+/***/ }),
+
+/***/ "./componentes/edita/form-edicao.js":
+/*!******************************************!*\
+  !*** ./componentes/edita/form-edicao.js ***!
+  \******************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _edita_cliente_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./edita-cliente.js */ \"./componentes/edita/edita-cliente.js\");\n\n\nconst inicializaFormEdicao = () => {\n  const form = document.createElement('form');\n\n  const formEdicao = `<div class=\"container\">\n    <div class=\"form-group\">\n      <label>CPF</label>\n      <input type=\"number\" class=\"form-control\" data-cpf placeholder=\"Digite seu CPF aqui\" />\n    </div>\n    <div class=\"form-group\">\n      <label>Nome</label>\n      <input type=\"text\" class=\"form-control\" data-nome placeholder=\"Digite seu nome aqui\" />\n    </div>\n    <div data-sucesso></div>\n    <button type=\"submit\" class=\"btn btn-primary\">Enviar</button>\n  </div> `;\n\n  form.innerHTML = formEdicao;\n\n  Object(_edita_cliente_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"])(form);\n\n  return form;\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (inicializaFormEdicao);\n\n\n//# sourceURL=webpack:///./componentes/edita/form-edicao.js?");
+
+/***/ }),
+
 /***/ "./componentes/lista/listagem-cliente.js":
 /*!***********************************************!*\
   !*** ./componentes/lista/listagem-cliente.js ***!
   \***********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _api_cliente_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../api/cliente.js */ \"./api/cliente.js\");\n/* harmony import */ var _assets_css_clientes_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../assets/css/clientes.css */ \"./assets/css/clientes.css\");\n/* harmony import */ var _assets_css_clientes_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_assets_css_clientes_css__WEBPACK_IMPORTED_MODULE_1__);\n\n\n\nconst removeCliente = (id) => {\n  if (confirm(\"Deseja deletar o cliente ?\")) {\n    Object(_api_cliente_js__WEBPACK_IMPORTED_MODULE_0__[\"deletaCliente\"])(id)\n    window.location.reload()\n  }\n}\n\nconst criarBotao = (id) => {\n  const botao = document.createElement('button');\n  botao.classList.add('btn', 'btn-danger');\n  botao.innerHTML = 'Excluir';\n\n  botao.addEventListener('click', () => {\n    removeCliente(id);\n  });\n\n  return botao\n}\n\nconst criaCorpoTabela = (tabela) => {\n\n  const corpoTabela = document.createElement('tbody');\n\n  const exibeCliente = (cpf, nome, id) => {\n    const linha = document.createElement('tr');\n\n    const conteudoLinha = `\n    <td>${cpf}</td>\n    <td>${nome}</td>\n    <button type=\"button\" class=\"btn btn-info\" onclick=\"navegacao('/edita?id=${id}'); return false;\">Editar</button>\n`\n    linha.innerHTML = conteudoLinha;\n    linha.appendChild(criarBotao(id));\n\n    return linha;\n  };\n\n  Object(_api_cliente_js__WEBPACK_IMPORTED_MODULE_0__[\"listarClientes\"])().then(exibe => {\n    exibe.forEach(indice => {\n      corpoTabela.appendChild(exibeCliente(indice.cpf, indice.nome, indice.id))\n    })\n  }\n  )\n\n  tabela.appendChild(corpoTabela);\n}\n\nconst inicializaTabela = () => {\n  const cabecalho = `\n  <thead class=\"thead-dark\">\n    <tr>\n      <th scope=\"col\">CPF</th>\n      <th scope=\"col\">Nome</th>\n      <th scope=\"col\"></th>\n      <th scope=\"col\"><a class=\"btn btn-primary\" onclick=\"navegacao('/cadastro'); return\">Novo Cliente<a></th>\n    </tr>\n  </thead>\n  `\n\n  const tabela = document.createElement('table');\n  tabela.innerHTML = cabecalho;\n  tabela.classList.add('table');\n\n  criaCorpoTabela(tabela);\n\n  return tabela;\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (inicializaTabela);\n\n\n//# sourceURL=webpack:///./componentes/lista/listagem-cliente.js?");
+
+/***/ }),
+
+/***/ "./componentes/valida/validaCPF.js":
+/*!*****************************************!*\
+  !*** ./componentes/valida/validaCPF.js ***!
+  \*****************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\nconst cpfInvalidos = [\n    '11111111111',\n    '22222222222',\n    '33333333333',\n    '44444444444',\n    '55555555555',\n    '66666666666',\n    '77777777777',\n    '88888888888',\n    '99999999999',\n    '00000000000'\n]\n\n\nfunction validaCPF(cpf) {\n    if (cpfInvalidos.indexOf(cpf) !== -1) {\n        return false;\n    }\n\n    return verificaPrimeiroDigito(cpf) && verificaSegundopDigito(cpf);\n}\n\nfunction somaNumerosCPF(cpf, totalDeDigitos, peso) {\n    let soma = 0;\n    for (let indice = 1; indice <= totalDeDigitos; indice++) {\n        soma += parseInt(cpf.substring(indice - 1, indice)) * (peso - indice);\n    }\n    return soma;\n}\n\nfunction verificaDigito(cpf, totalDeDigitos, peso, digito) {\n    const soma = somaNumerosCPF(cpf, totalDeDigitos, peso);\n    const resto = (soma * 10) % 11;\n    return resto === digito;\n}\n\nfunction verificaPrimeiroDigito(cpf) {\n    const peso = 11\n    const totalDeDigitos = 9\n    const digito = parseInt(cpf.substring(9, 10));\n\n    return verificaDigito(cpf, totalDeDigitos, peso, digito);\n}\n\nfunction verificaSegundopDigito(cpf) {\n    const peso = 12\n    const totalDeDigitos = 10\n    const digito = parseInt(cpf.substring(10, 11));\n\n    return verificaDigito(cpf, totalDeDigitos, peso, digito);\n}\n\n/* harmony default export */ __webpack_exports__[\"default\"] = (validaCPF);\n\n//# sourceURL=webpack:///./componentes/valida/validaCPF.js?");
+
+/***/ }),
+
+/***/ "./main.js":
+/*!*****************!*\
+  !*** ./main.js ***!
+  \*****************/
 /*! no exports provided */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _api_cliente_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../api/cliente.js */ \"./api/cliente.js\");\n/* harmony import */ var _assets_css_clientes_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../assets/css/clientes.css */ \"./assets/css/clientes.css\");\n/* harmony import */ var _assets_css_clientes_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_assets_css_clientes_css__WEBPACK_IMPORTED_MODULE_1__);\n\n\n\nconst removeCliente = (id) => {\n  if (confirm(\"Deseja deletar o cliente ?\")) {\n    Object(_api_cliente_js__WEBPACK_IMPORTED_MODULE_0__[\"deletaCliente\"])(id)\n    window.location.reload()\n  }\n}\n\nconst corpoTabela = document.querySelector(\"[data-conteudo-tabela]\");\n\nconst exibeCliente = (cpf, nome, id) => {\n  const linha = document.createElement('tr');\n\n  const conteudoLinha = `\n    <td>${cpf}</td>\n    <td>${nome}</td>\n    <button type=\"button\" class=\"btn btn-danger\" onclick=\"removeCliente(${id})\">Excluir</button>\n    <a href=\"./edita/edita-clientes.html?id=${id}\">\n    <button type=\"\"button class=\"btn btn-info\">Editar</button>\n    </a>\n    \n    \n`\n\n  linha.innerHTML = conteudoLinha;\n  return linha;\n};\n\nObject(_api_cliente_js__WEBPACK_IMPORTED_MODULE_0__[\"listarClientes\"])().then(exibe => {\n  exibe.forEach(indice => {\n    corpoTabela.appendChild(exibeCliente(indice.cpf, indice.nome, indice.id))\n  })\n}\n\n)\n\n\n\n\n\n\n//# sourceURL=webpack:///./componentes/lista/listagem-cliente.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var _router_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./router.js */ \"./router.js\");\n\n\nObject(_router_js__WEBPACK_IMPORTED_MODULE_0__[\"navegacao\"])(window.location.pathname);\n\n//# sourceURL=webpack:///./main.js?");
 
 /***/ }),
 
@@ -154,6 +226,18 @@ eval("\n\n/*\n  MIT License http://www.opensource.org/licenses/mit-license.php\n
 
 "use strict";
 eval("\n\nvar isOldIE = function isOldIE() {\n  var memo;\n  return function memorize() {\n    if (typeof memo === 'undefined') {\n      // Test for IE <= 9 as proposed by Browserhacks\n      // @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805\n      // Tests for existence of standard globals is to allow style-loader\n      // to operate correctly into non-standard environments\n      // @see https://github.com/webpack-contrib/style-loader/issues/177\n      memo = Boolean(window && document && document.all && !window.atob);\n    }\n\n    return memo;\n  };\n}();\n\nvar getTarget = function getTarget() {\n  var memo = {};\n  return function memorize(target) {\n    if (typeof memo[target] === 'undefined') {\n      var styleTarget = document.querySelector(target); // Special case to return head of iframe instead of iframe itself\n\n      if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {\n        try {\n          // This will throw an exception if access to iframe is blocked\n          // due to cross-origin restrictions\n          styleTarget = styleTarget.contentDocument.head;\n        } catch (e) {\n          // istanbul ignore next\n          styleTarget = null;\n        }\n      }\n\n      memo[target] = styleTarget;\n    }\n\n    return memo[target];\n  };\n}();\n\nvar stylesInDom = [];\n\nfunction getIndexByIdentifier(identifier) {\n  var result = -1;\n\n  for (var i = 0; i < stylesInDom.length; i++) {\n    if (stylesInDom[i].identifier === identifier) {\n      result = i;\n      break;\n    }\n  }\n\n  return result;\n}\n\nfunction modulesToDom(list, options) {\n  var idCountMap = {};\n  var identifiers = [];\n\n  for (var i = 0; i < list.length; i++) {\n    var item = list[i];\n    var id = options.base ? item[0] + options.base : item[0];\n    var count = idCountMap[id] || 0;\n    var identifier = \"\".concat(id, \" \").concat(count);\n    idCountMap[id] = count + 1;\n    var index = getIndexByIdentifier(identifier);\n    var obj = {\n      css: item[1],\n      media: item[2],\n      sourceMap: item[3]\n    };\n\n    if (index !== -1) {\n      stylesInDom[index].references++;\n      stylesInDom[index].updater(obj);\n    } else {\n      stylesInDom.push({\n        identifier: identifier,\n        updater: addStyle(obj, options),\n        references: 1\n      });\n    }\n\n    identifiers.push(identifier);\n  }\n\n  return identifiers;\n}\n\nfunction insertStyleElement(options) {\n  var style = document.createElement('style');\n  var attributes = options.attributes || {};\n\n  if (typeof attributes.nonce === 'undefined') {\n    var nonce =  true ? __webpack_require__.nc : undefined;\n\n    if (nonce) {\n      attributes.nonce = nonce;\n    }\n  }\n\n  Object.keys(attributes).forEach(function (key) {\n    style.setAttribute(key, attributes[key]);\n  });\n\n  if (typeof options.insert === 'function') {\n    options.insert(style);\n  } else {\n    var target = getTarget(options.insert || 'head');\n\n    if (!target) {\n      throw new Error(\"Couldn't find a style target. This probably means that the value for the 'insert' parameter is invalid.\");\n    }\n\n    target.appendChild(style);\n  }\n\n  return style;\n}\n\nfunction removeStyleElement(style) {\n  // istanbul ignore if\n  if (style.parentNode === null) {\n    return false;\n  }\n\n  style.parentNode.removeChild(style);\n}\n/* istanbul ignore next  */\n\n\nvar replaceText = function replaceText() {\n  var textStore = [];\n  return function replace(index, replacement) {\n    textStore[index] = replacement;\n    return textStore.filter(Boolean).join('\\n');\n  };\n}();\n\nfunction applyToSingletonTag(style, index, remove, obj) {\n  var css = remove ? '' : obj.media ? \"@media \".concat(obj.media, \" {\").concat(obj.css, \"}\") : obj.css; // For old IE\n\n  /* istanbul ignore if  */\n\n  if (style.styleSheet) {\n    style.styleSheet.cssText = replaceText(index, css);\n  } else {\n    var cssNode = document.createTextNode(css);\n    var childNodes = style.childNodes;\n\n    if (childNodes[index]) {\n      style.removeChild(childNodes[index]);\n    }\n\n    if (childNodes.length) {\n      style.insertBefore(cssNode, childNodes[index]);\n    } else {\n      style.appendChild(cssNode);\n    }\n  }\n}\n\nfunction applyToTag(style, options, obj) {\n  var css = obj.css;\n  var media = obj.media;\n  var sourceMap = obj.sourceMap;\n\n  if (media) {\n    style.setAttribute('media', media);\n  } else {\n    style.removeAttribute('media');\n  }\n\n  if (sourceMap && btoa) {\n    css += \"\\n/*# sourceMappingURL=data:application/json;base64,\".concat(btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))), \" */\");\n  } // For old IE\n\n  /* istanbul ignore if  */\n\n\n  if (style.styleSheet) {\n    style.styleSheet.cssText = css;\n  } else {\n    while (style.firstChild) {\n      style.removeChild(style.firstChild);\n    }\n\n    style.appendChild(document.createTextNode(css));\n  }\n}\n\nvar singleton = null;\nvar singletonCounter = 0;\n\nfunction addStyle(obj, options) {\n  var style;\n  var update;\n  var remove;\n\n  if (options.singleton) {\n    var styleIndex = singletonCounter++;\n    style = singleton || (singleton = insertStyleElement(options));\n    update = applyToSingletonTag.bind(null, style, styleIndex, false);\n    remove = applyToSingletonTag.bind(null, style, styleIndex, true);\n  } else {\n    style = insertStyleElement(options);\n    update = applyToTag.bind(null, style, options);\n\n    remove = function remove() {\n      removeStyleElement(style);\n    };\n  }\n\n  update(obj);\n  return function updateStyle(newObj) {\n    if (newObj) {\n      if (newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap) {\n        return;\n      }\n\n      update(obj = newObj);\n    } else {\n      remove();\n    }\n  };\n}\n\nmodule.exports = function (list, options) {\n  options = options || {}; // Force single-tag solution on IE6-9, which has a hard limit on the # of <style>\n  // tags it will allow on a page\n\n  if (!options.singleton && typeof options.singleton !== 'boolean') {\n    options.singleton = isOldIE();\n  }\n\n  list = list || [];\n  var lastIdentifiers = modulesToDom(list, options);\n  return function update(newList) {\n    newList = newList || [];\n\n    if (Object.prototype.toString.call(newList) !== '[object Array]') {\n      return;\n    }\n\n    for (var i = 0; i < lastIdentifiers.length; i++) {\n      var identifier = lastIdentifiers[i];\n      var index = getIndexByIdentifier(identifier);\n      stylesInDom[index].references--;\n    }\n\n    var newLastIdentifiers = modulesToDom(newList, options);\n\n    for (var _i = 0; _i < lastIdentifiers.length; _i++) {\n      var _identifier = lastIdentifiers[_i];\n\n      var _index = getIndexByIdentifier(_identifier);\n\n      if (stylesInDom[_index].references === 0) {\n        stylesInDom[_index].updater();\n\n        stylesInDom.splice(_index, 1);\n      }\n    }\n\n    lastIdentifiers = newLastIdentifiers;\n  };\n};\n\n//# sourceURL=webpack:///./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js?");
+
+/***/ }),
+
+/***/ "./router.js":
+/*!*******************!*\
+  !*** ./router.js ***!
+  \*******************/
+/*! exports provided: navegacao */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"navegacao\", function() { return navegacao; });\n/* harmony import */ var _componentes_lista_listagem_cliente_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./componentes/lista/listagem-cliente.js */ \"./componentes/lista/listagem-cliente.js\");\n/* harmony import */ var _componentes_cadastro_componente_cadastro_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./componentes/cadastro/componente-cadastro.js */ \"./componentes/cadastro/componente-cadastro.js\");\n/* harmony import */ var _componentes_edita_form_edicao_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./componentes/edita/form-edicao.js */ \"./componentes/edita/form-edicao.js\");\n\n\n\n\n\nconst rotas = {\n    '/': _componentes_lista_listagem_cliente_js__WEBPACK_IMPORTED_MODULE_0__[\"default\"],\n    '/cadastro': _componentes_cadastro_componente_cadastro_js__WEBPACK_IMPORTED_MODULE_1__[\"default\"],\n    '/edita': _componentes_edita_form_edicao_js__WEBPACK_IMPORTED_MODULE_2__[\"default\"],\n}\n\nconst rootDiv = document.querySelector('[data-container]');\n\nconst navegacao = pathname => {\n    window.history.pushState({}, pathname, window.location.origin + pathname);\n\n    rootDiv.innerHTML = \"\";\n    const iniciarRota = rotas[window.location.pathname];\n\n    rootDiv.appendChild(iniciarRota());\n}\n\nwindow.navegacao = navegacao;\n\nwindow.onpopstate = () => {\n    rootDiv.innerHTML = \"\"\n\n    rootDiv.appendChild(rotas[window.location.pathname]());\n}\n\n\n\n\n//# sourceURL=webpack:///./router.js?");
 
 /***/ })
 
