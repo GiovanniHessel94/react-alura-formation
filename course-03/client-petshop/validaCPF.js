@@ -12,8 +12,8 @@ const cpfInvalidos = [
 ]
 
 
-function validaCPF(cpf){
-    if (cpfInvalidos.indexOf(cpf) !== -1){
+function validaCPF(cpf) {
+    if (cpfInvalidos.indexOf(cpf) !== -1) {
         return false;
     }
 
@@ -22,19 +22,19 @@ function validaCPF(cpf){
 
 function somaNumerosCPF(cpf, totalDeDigitos, peso) {
     let soma = 0;
-    for(let indice = 1; indice <= totalDeDigitos; indice++){
-        soma += parseInt(cpf.substring(indice-1, indice)) * (peso - indice);
+    for (let indice = 1; indice <= totalDeDigitos; indice++) {
+        soma += parseInt(cpf.substring(indice - 1, indice)) * (peso - indice);
     }
     return soma;
 }
 
-function verificaDigito(cpf, totalDeDigitos, peso, digito){
+function verificaDigito(cpf, totalDeDigitos, peso, digito) {
     const soma = somaNumerosCPF(cpf, totalDeDigitos, peso);
     const resto = (soma * 10) % 11;
     return resto === digito;
 }
 
-function verificaPrimeiroDigito(cpf){
+function verificaPrimeiroDigito(cpf) {
     const peso = 11
     const totalDeDigitos = 9
     const digito = parseInt(cpf.substring(9, 10));
@@ -42,7 +42,7 @@ function verificaPrimeiroDigito(cpf){
     return verificaDigito(cpf, totalDeDigitos, peso, digito);
 }
 
-function verificaSegundopDigito(cpf){
+function verificaSegundopDigito(cpf) {
     const peso = 12
     const totalDeDigitos = 10
     const digito = parseInt(cpf.substring(10, 11));
