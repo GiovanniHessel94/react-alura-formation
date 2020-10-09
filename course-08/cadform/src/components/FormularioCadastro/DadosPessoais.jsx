@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, TextField, Switch, FormControlLabel } from "@material-ui/core";
 
-function FormularioCadastro({ aoEnviar, validarCPF }) {
+function DadosPessoais({ aoEnviar, validarCPF }) {
   const [nome, setNome] = useState("");
   const [sobrenome, setSobrenome] = useState("");
   const [cpf, setCPF] = useState("");
@@ -24,6 +24,8 @@ function FormularioCadastro({ aoEnviar, validarCPF }) {
         variant="outlined"
         fullWidth
         margin="normal"
+        type="text"
+        required
         value={nome}
         onChange={(e) => {
           setNome(e.target.value);
@@ -36,6 +38,8 @@ function FormularioCadastro({ aoEnviar, validarCPF }) {
         variant="outlined"
         fullWidth
         margin="normal"
+        type="text"
+        required
         value={sobrenome}
         onChange={(e) => {
           setSobrenome(e.target.value);
@@ -48,6 +52,7 @@ function FormularioCadastro({ aoEnviar, validarCPF }) {
         variant="outlined"
         fullWidth
         margin="normal"
+        required
         error={errors.cpf.invalido}
         helperText={errors.cpf.texto}
         value={cpf}
@@ -100,4 +105,4 @@ function FormularioCadastro({ aoEnviar, validarCPF }) {
   );
 }
 
-export default FormularioCadastro;
+export default DadosPessoais;
