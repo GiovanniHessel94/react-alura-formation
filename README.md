@@ -16,7 +16,7 @@ In total eighth courses were completed, as listed below.
 * React: Hooks, Contexts and Good Practices
 * React: Styled Components
 
-## Authors
+## Author
 
 Giovanni Hessel\
 [@Linkedin](https://www.linkedin.com/in/giovanni-garcia-hessel-137b1393/)
